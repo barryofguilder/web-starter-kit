@@ -4,6 +4,7 @@ module.exports = function(grunt) {
     // All the source file paths
     src: {
       html: ['*.html'],
+      imagesRoot: 'img/',
       images: ['img/**/*.*'],
       js: ['js/**/*.js'],
       less: ['less/**/*.less'],
@@ -117,6 +118,24 @@ module.exports = function(grunt) {
       }
     },
 
+    imagemin: {
+      images: {
+        files: [{
+          expand: true,
+          cwd: paths.src.imagesRoot,
+          src: '**/*.*',
+          dest: paths.src.imagesRoot
+        }]
+      },
+
+      favicon: {
+        files: [{
+          expand: true,
+          src: ['apple-touch-icon.png']
+        }]
+      }
+    },
+
     jshint: {
       options: {
         reporter: require('jshint-stylish'),
@@ -133,7 +152,7 @@ module.exports = function(grunt) {
         }
       },
       files: {
-        src: ['js/**/*.js']
+        src: paths.src.js
       }
     },
 
@@ -205,11 +224,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('default', ['clean:build', 'less:development', 'jshint', 'concat', 'copy', 'connect', 'watch']);
-  grunt.registerTask('build', ['clean:build', 'less:production', 'concat', 'copy', 'uglify', 'cache-busting']);
+  grunt.registerTask('build', ['clean:build', 'less:production', 'concat', 'imagemin', 'copy', 'uglify', 'cache-busting']);
 };
