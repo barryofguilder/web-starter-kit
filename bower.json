@@ -1,0 +1,8 @@
+{
+  "name": "web-starter-kit",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "jquery": "~1.11.2"
+  }
+}
